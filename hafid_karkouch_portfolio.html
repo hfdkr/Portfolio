@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hafid Karkouch — GitHub Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --neon:    #00F5D4;
+  --purple:  #A78BFA;
+  --bg:      #0A0A0F;
+  --surface: #111118;
+  --surface2:#1A1A24;
+  --border:  rgba(0,245,212,0.18);
+  --text:    #E8E8F0;
+  --muted:   #6B6B80;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* grid bg */
+.grid-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(0,245,212,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,212,0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.profile {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── header ── */
+.header { text-align: center; padding: 1.75rem 0 2rem; }
+
+.avatar-ring {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00F5D4, #7B2FBE);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+.avatar-ring::before {
+  content: ''; position: absolute; inset: 3px;
+  border-radius: 50%; background: var(--bg);
+}
+.avatar-inner {
+  position: relative; z-index: 1;
+  width: 78px; height: 78px;
+  border-radius: 50%; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface2);
+}
+.avatar-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.avatar-initials {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px; font-weight: 800; color: var(--neon);
+}
+
+.name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 6vw, 30px);
+  font-weight: 800; letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #00F5D4, #A78BFA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.35rem;
+}
+
+.tagline {
+  font-size: clamp(9px, 2.5vw, 11px);
+  color: var(--muted); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 1.2rem;
+}
+
+.typing-bar {
+  display: inline-block;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: clamp(11px, 3vw, 13px);
+  color: var(--neon);
+  max-width: 100%;
+}
+.typing-bar::before { content: '> '; color: var(--muted); }
+.cursor {
+  display: inline-block; width: 2px; height: 13px;
+  background: var(--neon); vertical-align: middle; margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* divider */
+.divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0.22; margin: 1.5rem 0;
+}
+
+/* section label */
+.sec {
+  font-size: clamp(9px, 2.5vw, 11px);
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--neon); margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.sec::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── about grid ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px; margin-bottom: 1.5rem;
+}
+.about-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: clamp(11px, 3vw, 12px);
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text); transition: border-color 0.2s;
+  min-width: 0;
+}
+.about-item:hover { border-color: rgba(0,245,212,0.45); }
+.about-item .ico { font-size: 15px; flex-shrink: 0; }
+.about-item span:last-child {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── tech stack ── */
+.stack-section { margin-bottom: 1.5rem; }
+.stack-group { margin-bottom: 0.85rem; }
+.stack-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: clamp(10px, 2.8vw, 11px);
+  color: var(--text);
+  display: flex; align-items: center; gap: 5px;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  cursor: default; white-space: nowrap;
+}
+.badge:hover { border-color: var(--neon); color: var(--neon); transform: translateY(-1px); }
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.d-html  { background: #E34F26; }
+.d-css   { background: #264DE4; }
+.d-js    { background: #F7DF1E; }
+.d-tw    { background: #06B6D4; }
+.d-bs    { background: #7952B3; }
+.d-wf    { background: #4353FF; }
+.d-fig   { background: #A259FF; }
+.d-ps    { background: #31A8FF; }
+.d-git   { background: #F05032; }
+.d-gh    { background: #888;    }
+.d-linux { background: #FCC624; }
+
+/* ── what I build ── */
+.builds-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px; margin-bottom: 1.5rem;
+}
+.build-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: clamp(11px, 3vw, 12px);
+  display: flex; align-items: flex-start; gap: 8px;
+  transition: border-color 0.2s; min-width: 0;
+}
+.build-item:hover { border-color: rgba(0,245,212,0.4); }
+.build-ico { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.build-txt { color: var(--text); line-height: 1.5; }
+
+/* ── projects ── */
+.projects { display: flex; flex-direction: column; gap: 9px; margin-bottom: 1.5rem; }
+.proj-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  transition: border-color 0.2s;
+}
+.proj-card:hover { border-color: rgba(0,245,212,0.45); }
+.proj-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 8px;
+  margin-bottom: 0.4rem;
+}
+.proj-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(12px, 3.5vw, 14px);
+  font-weight: 700; color: var(--text);
+  line-height: 1.3;
+}
+.proj-link {
+  color: var(--neon); font-size: clamp(10px, 2.5vw, 11px);
+  text-decoration: none; white-space: nowrap;
+  padding-top: 2px; letter-spacing: 0.5px;
+  transition: opacity 0.2s; flex-shrink: 0;
+}
+.proj-link:hover { opacity: 0.75; }
+.proj-desc {
+  font-size: clamp(11px, 2.8vw, 12px);
+  color: var(--muted); line-height: 1.65; margin-bottom: 0.7rem;
+}
+.proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.proj-tag {
+  background: rgba(0,245,212,0.07);
+  border: 1px solid rgba(0,245,212,0.2);
+  color: var(--neon); border-radius: 4px;
+  padding: 2px 8px;
+  font-size: clamp(9px, 2.5vw, 10px);
+  letter-spacing: 0.5px; white-space: nowrap;
+}
+
+/* ── goals ── */
+.goals { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.goal-row { display: flex; align-items: center; gap: 10px; }
+.goal-lbl {
+  font-size: clamp(10px, 2.8vw, 12px);
+  color: var(--text); flex-shrink: 0;
+  width: clamp(130px, 38vw, 200px);
+}
+.goal-track {
+  flex: 1; height: 4px;
+  background: var(--surface2);
+  border-radius: 2px; overflow: hidden;
+  min-width: 0;
+}
+.goal-fill {
+  height: 100%; border-radius: 2px; width: 0%;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.goal-pct {
+  font-size: clamp(10px, 2.5vw, 11px);
+  color: var(--neon); flex-shrink: 0;
+  width: 34px; text-align: right;
+}
+
+/* ── contact ── */
+.contact-row {
+  display: flex; flex-wrap: wrap;
+  gap: 8px; justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.c-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(10px, 2.8vw, 12px);
+  color: var(--text); text-decoration: none;
+  display: flex; align-items: center; gap: 7px;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.c-btn:hover { border-color: var(--neon); color: var(--neon); transform: translateY(-2px); }
+.c-btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+/* ── footer ── */
+.footer {
+  text-align: center;
+  font-size: clamp(9px, 2.5vw, 10px);
+  color: var(--muted); letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  line-height: 1.8;
+}
+
+/* ════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ════════════════════════════════ */
+
+/* ── Small phones (< 400px) ── */
+@media (max-width: 399px) {
+  .profile { padding: 1.25rem 0.75rem 2.5rem; }
+  .header { padding: 1.25rem 0 1.5rem; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 6px; }
+  .builds-grid { grid-template-columns: 1fr; gap: 6px; }
+
+  .contact-row { flex-direction: column; align-items: stretch; }
+  .c-btn { justify-content: center; }
+
+  .goal-lbl { width: 120px; }
+
+  .proj-top { flex-direction: column; gap: 4px; }
+  .proj-link { align-self: flex-start; }
+}
+
+/* ── Regular phones (400px – 599px) ── */
+@media (min-width: 400px) and (max-width: 599px) {
+  .profile { padding: 1.5rem 1rem 2.5rem; }
+
+  .contact-row { gap: 7px; }
+  .c-btn { padding: 10px 14px; flex: 1 1 calc(50% - 4px); justify-content: center; }
+
+  .about-grid { gap: 6px; }
+  .goal-lbl { width: 140px; }
+}
+
+/* ── Tablets (600px – 767px) ── */
+@media (min-width: 600px) and (max-width: 767px) {
+  .profile { padding: 2rem 1.25rem 3rem; }
+  .c-btn { padding: 11px 20px; }
+}
+
+/* ── Desktop (768px+) ── */
+@media (min-width: 768px) {
+  .profile { padding: 2.5rem 1.5rem 3rem; }
+  .about-item { padding: 11px 14px; }
+  .build-item { padding: 11px 13px; }
+  .c-btn { padding: 12px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="profile">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="avatar-ring">
+      <div class="avatar-inner">
+        <img src="./assets/photo-profile.png" alt="Hafid Karkouch"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="avatar-initials" style="display:none">HK</span>
+      </div>
+    </div>
+    <div class="name">HAFID KARKOUCH</div>
+    <div class="tagline">Front-End Developer &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Learner</div>
+    <div class="typing-bar">
+      <span id="typing-text">Front-End Developer</span><span class="cursor"></span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <div class="sec">// about me</div>
+  <div class="about-grid">
+    <div class="about-item"><span class="ico">💻</span><span>Front-End Developer</span></div>
+    <div class="about-item"><span class="ico">🎨</span><span>UI / UX Enthusiast</span></div>
+    <div class="about-item"><span class="ico">📍</span><span>Agadir, Morocco</span></div>
+    <div class="about-item"><span class="ico">🎓</span><span>Student at École EWA</span></div>
+    <div class="about-item"><span class="ico">🌐</span><span>Arabic · French · English</span></div>
+    <div class="about-item"><span class="ico">🚀</span><span>Always Building</span></div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="sec">// tech stack</div>
+  <div class="stack-section">
+    <div class="stack-group">
+      <div class="stack-label">Front-End</div>
+      <div class="badges">
+        <div class="badge"><span class="dot d-html"></span>HTML5</div>
+        <div class="badge"><span class="dot d-css"></span>CSS3</div>
+        <div class="badge"><span class="dot d-js"></span>JavaScript</div>
+        <div class="badge"><span class="dot d-tw"></span>Tailwind CSS</div>
+        <div class="badge"><span class="dot d-bs"></span>Bootstrap</div>
+        <div class="badge"><span class="dot d-wf"></span>Webflow</div>
+      </div>
+    </div>
+    <div class="stack-group">
+      <div class="stack-label">Design</div>
+      <div class="badges">
+        <div class="badge"><span class="dot d-fig"></span>Figma</div>
+        <div class="badge"><span class="dot d-ps"></span>Photoshop</div>
+      </div>
+    </div>
+    <div class="stack-group" style="margin-bottom:0">
+      <div class="stack-label">Tools</div>
+      <div class="badges">
+        <div class="badge"><span class="dot d-git"></span>Git</div>
+        <div class="badge"><span class="dot d-gh"></span>GitHub</div>
+        <div class="badge"><span class="dot d-linux"></span>Linux</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT I BUILD -->
+  <div class="sec">// what i build</div>
+  <div class="builds-grid">
+    <div class="build-item"><span class="build-ico">🎨</span><span class="build-txt">Responsive web pages</span></div>
+    <div class="build-item"><span class="build-ico">📱</span><span class="build-txt">Mobile-first layouts</span></div>
+    <div class="build-item"><span class="build-ico">🧩</span><span class="build-txt">UI components & design systems</span></div>
+    <div class="build-item"><span class="build-ico">⚡</span><span class="build-txt">Interactive JS frontends</span></div>
+    <div class="build-item"><span class="build-ico">🛒</span><span class="build-txt">Landing pages & stores</span></div>
+    <div class="build-item"><span class="build-ico">📚</span><span class="build-txt">Multi-page web apps</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <div class="sec">// projects</div>
+  <div class="projects">
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-name">CodeArena — Quiz Platform</span>
+        <a class="proj-link" href="https://github.com/hfdkr/CODE-ARENA1" target="_blank">↗ github</a>
+      </div>
+      <div class="proj-desc">Interactive quiz platform with HTML, CSS, JS &amp; Python categories, difficulty levels, countdown timer, leaderboard, and user login. Dark UI with real-time scoring.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">HTML5</span><span class="proj-tag">CSS3</span>
+        <span class="proj-tag">JavaScript</span><span class="proj-tag">Tailwind CSS</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-name">TaskFlow — Kanban Board</span>
+        <a class="proj-link" href="https://github.com/hfdkr/Task_Flow" target="_blank">↗ github</a>
+      </div>
+      <div class="proj-desc">Team task manager with Kanban columns, drag-and-drop, dark/light theme toggle, member cards, and a stats dashboard. Built collaboratively with 3 teammates.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">HTML5</span><span class="proj-tag">CSS3</span>
+        <span class="proj-tag">JavaScript</span><span class="proj-tag">Tailwind CSS</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-name">Hafid Parfum — Luxury Store</span>
+        <a class="proj-link" href="https://github.com/hfdkr/store-1" target="_blank">↗ github</a>
+      </div>
+      <div class="proj-desc">Dark luxury fragrance landing page with animated marquee, radial gradients, custom Tailwind theme tokens, and responsive mobile navigation.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">HTML5</span><span class="proj-tag">Tailwind CSS v4</span>
+        <span class="proj-tag">JavaScript</span><span class="proj-tag">Responsive</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-name">Frontend Quiz App</span>
+        <a class="proj-link" href="https://github.com/hfdkr/Frontend-quiz" target="_blank">↗ github</a>
+      </div>
+      <div class="proj-desc">Multi-page quiz covering HTML, CSS, JS, and web accessibility. Colour-coded answer feedback, progress bar, and score tracking via sessionStorage &amp; localStorage.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">HTML5</span><span class="proj-tag">Tailwind CSS v4</span>
+        <span class="proj-tag">JavaScript</span><span class="proj-tag">sessionStorage</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-name">E-Tutor — Learning Platform UI</span>
+        <a class="proj-link" href="https://github.com/hfdkr/E-tutor-project" target="_blank">↗ github</a>
+      </div>
+      <div class="proj-desc">Four-page responsive e-learning website with home, categories, course listings, and contact. Custom Tailwind v4 design system with semantic color tokens.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">HTML5</span><span class="proj-tag">Tailwind CSS v4</span>
+        <span class="proj-tag">Multi-page</span><span class="proj-tag">Responsive</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GOALS -->
+  <div class="sec">// current goals</div>
+  <div class="goals">
+    <div class="goal-row">
+      <span class="goal-lbl">Master responsive CSS</span>
+      <div class="goal-track"><div class="goal-fill" data-pct="70" style="background:#00F5D4"></div></div>
+      <span class="goal-pct" data-pct="70">0%</span>
+    </div>
+    <div class="goal-row">
+      <span class="goal-lbl">JavaScript fundamentals</span>
+      <div class="goal-track"><div class="goal-fill" data-pct="55" style="background:#A78BFA"></div></div>
+      <span class="goal-pct" data-pct="55">0%</span>
+    </div>
+    <div class="goal-row">
+      <span class="goal-lbl">Deploy projects live</span>
+      <div class="goal-track"><div class="goal-fill" data-pct="30" style="background:#7B2FBE"></div></div>
+      <span class="goal-pct" data-pct="30">0%</span>
+    </div>
+    <div class="goal-row">
+      <span class="goal-lbl">Land first internship</span>
+      <div class="goal-track"><div class="goal-fill" data-pct="45" style="background:#378ADD"></div></div>
+      <span class="goal-pct" data-pct="45">0%</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <div class="sec">// contact</div>
+  <div class="contact-row">
+
+    <a class="c-btn" href="https://github.com/hfdkr" target="_blank">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      GitHub
+    </a>
+
+    <a class="c-btn" href="https://www.linkedin.com/in/hafid-k/" target="_blank">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+
+    <a class="c-btn" href="tel:+212639675169">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.19 2.46.56 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/></svg>
+      +212 639 675 169
+    </a>
+
+    <a class="c-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=hafidkarkouch5@gmail.com" target="_blank">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2-8 5-8-5h16zm0 12H4V8.223l8 5 8-5V18z"/></svg>
+      Email
+    </a>
+
+  </div>
+
+  <div class="footer">hafid karkouch &nbsp;·&nbsp; front-end developer &nbsp;·&nbsp; agadir, morocco &nbsp;·&nbsp; open to internships</div>
+
+</div>
+
+<script>
+const phrases = ['Front-End Developer','UI / UX Enthusiast','Always Building','Open to Internships'];
+let pIdx = 0, cIdx = 0, deleting = false;
+const el = document.getElementById('typing-text');
+function type() {
+  const word = phrases[pIdx];
+  if (!deleting) {
+    el.textContent = word.slice(0, ++cIdx);
+    if (cIdx === word.length) { deleting = true; setTimeout(type, 2000); return; }
+  } else {
+    el.textContent = word.slice(0, --cIdx);
+    if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 55 : 85);
+}
+setTimeout(type, 900);
+
+function animateGoals() {
+  document.querySelectorAll('.goal-fill').forEach(bar => {
+    bar.style.width = bar.dataset.pct + '%';
+  });
+  document.querySelectorAll('.goal-pct').forEach(span => {
+    const target = parseInt(span.dataset.pct);
+    let v = 0;
+    const t = setInterval(() => {
+      v = Math.min(v + 1, target);
+      span.textContent = v + '%';
+      if (v >= target) clearInterval(t);
+    }, 14);
+  });
+}
+setTimeout(animateGoals, 500);
+</script>
+</body>
+</html>
